@@ -17,7 +17,7 @@
 
 import time
 from itertools import count
-from multiprocessing import cpu_count
+from multiprocess import cpu_count
 from concurrent.futures import Future
 
 from pebble.common import execute, launch_thread

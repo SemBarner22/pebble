@@ -18,7 +18,7 @@ import os
 import time
 import atexit
 import pickle
-import multiprocessing
+import multiprocess
 
 from itertools import count
 from collections import namedtuple
@@ -49,11 +49,11 @@ class ProcessPool(BasePool):
 
     """
 
-    def __init__(self, max_workers=multiprocessing.cpu_count(), max_tasks=0,
+    def __init__(self, max_workers=multiprocess.cpu_count(), max_tasks=0,
                  initializer=None, initargs=(), context=None):
         super(ProcessPool, self).__init__(
             max_workers, max_tasks, initializer, initargs)
-        mp_context = multiprocessing if context is None else context
+        mp_context = multiprocess if context is None else context
         self._pool_manager = PoolManager(self._context, mp_context)
         self._task_scheduler_loop = None
         self._pool_manager_loop = None
@@ -480,7 +480,7 @@ def interpreter_shutdown():
     global global_shutdown
     global_shutdown = True
 
-    workers = [p for p in multiprocessing.active_children()
+    workers = [p for p in multiprocess.active_children()
                if p.name == WORKERS_NAME]
 
     for worker in workers:

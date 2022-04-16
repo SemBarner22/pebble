@@ -4,7 +4,7 @@ import pickle
 import signal
 import unittest
 import threading
-import multiprocessing
+import multiprocess
 from concurrent.futures import CancelledError, TimeoutError
 
 from pebble import concurrent, ProcessExpired
@@ -15,10 +15,10 @@ supported = False
 mp_context = None
 
 
-methods = multiprocessing.get_all_start_methods()
+methods = multiprocess.get_all_start_methods()
 if 'spawn' in methods:
     try:
-        mp_context = multiprocessing.get_context('spawn')
+        mp_context = multiprocess.get_context('spawn')
 
         if mp_context.get_start_method() == 'spawn':
             supported = True
@@ -72,7 +72,7 @@ def sigterm_decorated():
 
 @concurrent.process(daemon=False, context=mp_context)
 def daemon_keyword_decorated():
-    return multiprocessing.current_process().daemon
+    return multiprocess.current_process().daemon
 
 
 class ProcessConcurrentObj:

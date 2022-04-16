@@ -19,7 +19,7 @@ import os
 import sys
 import types
 import signal
-import multiprocessing
+import multiprocess
 
 from itertools import count
 from functools import wraps
@@ -46,7 +46,7 @@ def process(*args, **kwargs):
     The daemon parameter controls the underlying process daemon flag.
     Default is True.
 
-    The context parameter allows to provide the multiprocessing.context
+    The context parameter allows to provide the multiprocess.context
     object used for starting the process.
 
     """
@@ -57,15 +57,15 @@ def process(*args, **kwargs):
 
     # decorator without parameters
     if not kwargs and len(args) == 1 and callable(args[0]):
-        return _process_wrapper(args[0], timeout, name, daemon, multiprocessing)
+        return _process_wrapper(args[0], timeout, name, daemon, multiprocess)
 
     # decorator with parameters
     _validate_parameters(timeout, name, daemon, mp_context)
-    mp_context = mp_context if mp_context is not None else multiprocessing
+    mp_context = mp_context if mp_context is not None else multiprocess
 
     # without @pie syntax
     if len(args) == 1 and callable(args[0]):
-        return _process_wrapper(args[0], timeout, name, daemon, multiprocessing)
+        return _process_wrapper(args[0], timeout, name, daemon, multiprocess)
 
     # with @pie syntax
     def decorating_function(function):
@@ -168,8 +168,8 @@ def _validate_parameters(timeout, name, daemon, mp_context):
     if daemon is not None and not isinstance(daemon, bool):
         raise TypeError('Daemon expected to be None or bool')
     if mp_context is not None and not isinstance(
-            mp_context, multiprocessing.context.BaseContext):
-        raise TypeError('Context expected to be None or multiprocessing.context')
+            mp_context, multiprocess.context.BaseContext):
+        raise TypeError('Context expected to be None or multiprocess.context')
 
 
 ################################################################################

@@ -4,7 +4,7 @@ import pickle
 import signal
 import unittest
 import threading
-import multiprocessing
+import multiprocess
 from concurrent.futures import CancelledError, TimeoutError
 
 from pebble import concurrent, ProcessExpired
@@ -15,10 +15,10 @@ supported = False
 mp_context = None
 
 
-methods = multiprocessing.get_all_start_methods()
+methods = multiprocess.get_all_start_methods()
 if 'fork' in methods:
     try:
-        mp_context = multiprocessing.get_context('fork')
+        mp_context = multiprocess.get_context('fork')
 
         if mp_context.get_start_method() == 'fork':
             supported = True
@@ -77,17 +77,17 @@ def name_keyword_argument(name='function_kwarg'):
 
 @concurrent.process(name='concurrent_process_name', context=mp_context)
 def name_keyword_decorated():
-    return multiprocessing.current_process().name
+    return multiprocess.current_process().name
 
 
 @concurrent.process(name='decorator_kwarg', context=mp_context)
 def name_keyword_decorated_and_argument(name='bar'):
-    return (multiprocessing.current_process().name, name)
+    return (multiprocess.current_process().name, name)
 
 
 @concurrent.process(daemon=False, context=mp_context)
 def daemon_keyword_decorated():
-    return multiprocessing.current_process().daemon
+    return multiprocess.current_process().daemon
 
 
 class ProcessConcurrentObj:

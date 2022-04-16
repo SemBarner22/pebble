@@ -5,7 +5,7 @@ import pickle
 import signal
 import unittest
 import threading
-import multiprocessing
+import multiprocess
 
 from concurrent.futures import CancelledError, TimeoutError
 
@@ -19,10 +19,10 @@ supported = False
 mp_context = None
 
 
-methods = multiprocessing.get_all_start_methods()
+methods = multiprocess.get_all_start_methods()
 if 'forkserver' in methods:
     try:
-        mp_context = multiprocessing.get_context('forkserver')
+        mp_context = multiprocess.get_context('forkserver')
 
         if mp_context.get_start_method() == 'forkserver':
             supported = True
@@ -85,7 +85,7 @@ def suicide_function():
 
 
 def process_function():
-    p = multiprocessing.Process(target=function, args=[1])
+    p = multiprocess.Process(target=function, args=[1])
     p.start()
     p.join()
 
@@ -93,7 +93,7 @@ def process_function():
 
 
 def pool_function():
-    pool = multiprocessing.Pool(1)
+    pool = multiprocess.Pool(1)
     result = pool.apply(function, args=[1])
     pool.close()
     pool.join()
@@ -540,7 +540,7 @@ class TestProcessPool(unittest.TestCase):
         self.assertEqual(future.result(), 1)
 
     def test_process_pool_child_pool(self):
-        """Process Pool Forkserver worker starts multiprocessing.Pool."""
+        """Process Pool Forkserver worker starts multiprocess.Pool."""
         with ProcessPool(max_workers=1, context=mp_context) as pool:
             future = pool.schedule(pool_function)
         self.assertEqual(future.result(), 1)

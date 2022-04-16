@@ -13,7 +13,7 @@ Pebble
 
 Modern languages should natively support concurrency, threading and synchronization primitives. Their usage should be the most intuitive possible, yet allowing all the required flexibility.
 
-Pebble aims to help managing threads and processes in an easier way. It wraps Python's standard library threading and multiprocessing objects.
+Pebble aims to help managing threads and processes in an easier way. It wraps Python's standard library threading and multiprocess objects.
 
 
 `Concurrent Module`
@@ -31,7 +31,7 @@ Pebble aims to help managing threads and processes in an easier way. It wraps Py
 
    The *daemon* parameter switches between daemon and non-daemon threads.
 
-   The *context* parameter can be used to specify the multiprocessing.context_ object used for starting the process.
+   The *context* parameter can be used to specify the multiprocess.context_ object used for starting the process.
 
 .. decorator:: concurrent.thread(name=None, daemon=True)
 
@@ -47,7 +47,7 @@ Pebble aims to help managing threads and processes in an easier way. It wraps Py
 `Pebble Module`
 ---------------
 
-.. class:: pebble.ProcessPool(max_workers=multiprocessing.cpu_count(), max_tasks=0, initializer=None, initargs=None, context=None)
+.. class:: pebble.ProcessPool(max_workers=multiprocess.cpu_count(), max_tasks=0, initializer=None, initargs=None, context=None)
 
    A Pool allows to schedule jobs into a Pool of Processes which will perform them concurrently.
    Process pools work as well as a *context manager*.
@@ -55,7 +55,7 @@ Pebble aims to help managing threads and processes in an easier way. It wraps Py
    *max_workers* is an integer representing the amount of desired process workers managed by the pool. If *max_tasks* is a number greater than zero, each worker will be restarted after performing an equal amount of tasks.
    *initializer* must be callable, if passed, it will be called every time a worker is started, receiving *initargs* as arguments.
 
-   The *context* parameter can be used to specify the multiprocessing.context_ object used for starting the worker processes.
+   The *context* parameter can be used to specify the multiprocess.context_ object used for starting the worker processes.
 
    .. data:: active
 
@@ -102,7 +102,7 @@ Pebble aims to help managing threads and processes in an easier way. It wraps Py
 
       The *join* function must be called only in the main loop. Calling it in a pebble.ProcessFuture_ callback will result in a deadlock.
 
-.. class:: pebble.ThreadPool(max_workers=multiprocessing.cpu_count(), max_tasks=0, initializer=None, initargs=None)
+.. class:: pebble.ThreadPool(max_workers=multiprocess.cpu_count(), max_tasks=0, initializer=None, initargs=None)
 
    A ThreadPool allows to schedule jobs into a Pool of Threads which will perform them concurrently.
    Thread pools work as well as a *context manager*.
@@ -156,7 +156,7 @@ Pebble aims to help managing threads and processes in an easier way. It wraps Py
 
    A synchronized function prevents two or more callers to interleave its execution preventing race conditions.
 
-   The *synchronized* decorator accepts as optional parameter a *Lock*, *RLock* or *Semaphore* from *threading* and *multiprocessing* modules.
+   The *synchronized* decorator accepts as optional parameter a *Lock*, *RLock* or *Semaphore* from *threading* and *multiprocess* modules.
 
    If no synchronization object is given, a *threading.Lock* will be employed. This implies that between different decorated functions only one at a time will be executed.
 
@@ -235,7 +235,7 @@ Pebble aims to help managing threads and processes in an easier way. It wraps Py
 Programming Guidelines
 ----------------------
 
-The Python's multiprocessing `programming guidelines`_ apply as well for all functionalities within the *process* namespace.
+The Python's multiprocess `programming guidelines`_ apply as well for all functionalities within the *process* namespace.
 
 Pool workers termination
 ++++++++++++++++++++++++
@@ -281,7 +281,7 @@ Run a function in a separate process and wait for its results.
 
     print(future.result())
 
-Quite often developers need to integrate in their projects third party code which appears to be unstable, to leak memory or to hang. The concurrent function allows to easily take advantage of the isolation offered by processes without the need of handling any multiprocessing primitive.
+Quite often developers need to integrate in their projects third party code which appears to be unstable, to leak memory or to hang. The concurrent function allows to easily take advantage of the isolation offered by processes without the need of handling any multiprocess primitive.
 
 ::
 
@@ -365,7 +365,7 @@ To compute large collections of elements without incurring in IPC performance li
 ::
 
     from pebble import ProcessPool
-    from multiprocessing import cpu_count
+    from multiprocess import cpu_count
     from concurrent.futures import TimeoutError
 
     def function(n):
@@ -444,8 +444,8 @@ Running the tests
 Please refer to the `.travis.yml` to see how to run the tests.
 
 .. _concurrent.futures.Future: https://docs.python.org/3/library/concurrent.futures.html#future-objects
-.. _multiprocessing.context: https://docs.python.org/3/library/multiprocessing.html#contexts-and-start-methods
-.. _`programming guidelines`: https://docs.python.org/3/library/multiprocessing.html#programming-guidelines
+.. _multiprocess.context: https://docs.python.org/3/library/multiprocess.html#contexts-and-start-methods
+.. _`programming guidelines`: https://docs.python.org/3/library/multiprocess.html#programming-guidelines
 
 .. toctree::
    :maxdepth: 2

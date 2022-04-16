@@ -18,7 +18,7 @@ setup(
     version=package_version(),
     author="Matteo Cafasso",
     author_email="noxdafox@gmail.com",
-    description=("Threading and multiprocessing eye-candy."),
+    description=("Threading and multiprocess eye-candy."),
     license="LGPL",
     keywords="thread process pool decorator",
     url="https://github.com/noxdafox/pebble",
